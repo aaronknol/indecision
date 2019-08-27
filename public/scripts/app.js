@@ -5,87 +5,82 @@ console.log('App.js is running');
 var text = {
     title: 'Indecision',
     subtitle: 'An app to help pick',
-    options: ['One', 'Two']
-};
-var template = React.createElement(
-    'header',
-    null,
-    React.createElement(
-        'h1',
-        null,
-        text.title
-    ),
-    text.subtitle && React.createElement(
-        'p',
-        null,
-        text.subtitle
-    ),
-    React.createElement(
-        'p',
-        null,
-        text.options && text.options.length ? 'Here are your options' : 'No options'
-    ),
-    React.createElement(
-        'ol',
-        null,
-        React.createElement(
-            'li',
-            null,
-            'Item 1'
-        ),
-        React.createElement(
-            'li',
-            null,
-            'Item 2'
-        )
-    )
-);
-
-var count = 0;
-var addOne = function addOne() {
-    count = count + 1;
-    renderCounterApp();
+    options: []
 };
 
-var subtractOne = function subtractOne() {
-    count = count - 1;
-    renderCounterApp();
+var onSubmit = function onSubmit(e) {
+    e.preventDefault();
+
+    var option = e.target.elements.option.value;
+
+    if (option) {
+        text.options.push(option);
+        e.target.elements.option.value = '';
+        renderApp();
+    }
 };
 
-var reset = function reset() {
-    count = 0;
-    renderCounterApp();
+var onRemoveAll = function onRemoveAll() {
+    text.options = [];
+    renderApp();
 };
 
-var renderCounterApp = function renderCounterApp() {
-    var templateTwo = React.createElement(
-        'div',
+var renderApp = function renderApp() {
+    var template = React.createElement(
+        'header',
         null,
         React.createElement(
             'h1',
             null,
-            'Count: ',
-            count
+            text.title
+        ),
+        text.subtitle && React.createElement(
+            'p',
+            null,
+            text.subtitle
+        ),
+        React.createElement(
+            'p',
+            null,
+            text.options && text.options.length ? 'Here are your options' : 'No options'
+        ),
+        React.createElement(
+            'p',
+            null,
+            text.options.length
         ),
         React.createElement(
             'button',
-            { type: 'button', onClick: addOne },
-            '+1'
+            { type: 'button', onClick: onRemoveAll },
+            'Remove all'
         ),
         React.createElement(
-            'button',
-            { type: 'button', onClick: subtractOne },
-            '-1'
+            'ol',
+            null,
+            React.createElement(
+                'li',
+                null,
+                'Item 1'
+            ),
+            React.createElement(
+                'li',
+                null,
+                'Item 2'
+            )
         ),
         React.createElement(
-            'button',
-            { type: 'button', onClick: reset },
-            'Reset'
+            'form',
+            { onSubmit: onSubmit },
+            React.createElement('input', { type: 'text', name: 'option' }),
+            React.createElement(
+                'button',
+                { type: 'submit' },
+                'Add option'
+            )
         )
     );
 
-    // ReactDOM.render(template, document.getElementById('app'));
-    ReactDOM.render(templateTwo, document.getElementById('app'));
+    ReactDOM.render(template, document.getElementById('app'));
 };
 
-renderCounterApp();
+renderApp();
