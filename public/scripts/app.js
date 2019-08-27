@@ -25,6 +25,8 @@ var onRemoveAll = function onRemoveAll() {
     renderApp();
 };
 
+var numbers = [55, 101, 1000];
+
 var renderApp = function renderApp() {
     var template = React.createElement(
         'header',
@@ -54,19 +56,24 @@ var renderApp = function renderApp() {
             { type: 'button', onClick: onRemoveAll },
             'Remove all'
         ),
+        numbers.map(function (number) {
+            return React.createElement(
+                'p',
+                { key: number },
+                'Number: ',
+                number
+            );
+        }),
         React.createElement(
             'ol',
             null,
-            React.createElement(
-                'li',
-                null,
-                'Item 1'
-            ),
-            React.createElement(
-                'li',
-                null,
-                'Item 2'
-            )
+            text.options.map(function (option) {
+                return React.createElement(
+                    'li',
+                    { key: option },
+                    option
+                );
+            })
         ),
         React.createElement(
             'form',
