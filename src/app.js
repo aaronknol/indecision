@@ -16,14 +16,18 @@ const onSubmit = (e) => {
         e.target.elements.option.value = '';
         renderApp();
     }
-}
+};
 
 const onRemoveAll = () => {
     text.options = [];
     renderApp();
-}
+};
 
-const numbers = [55, 101, 1000];
+const onMakeDecision = () => {
+    const randomNumber = Math.floor(Math.random() * text.options.length);
+    const selectedOption = text.options[randomNumber];
+    alert(selectedOption);
+};
 
 const renderApp = () => {
     const template = (
@@ -31,13 +35,8 @@ const renderApp = () => {
             <h1>{text.title}</h1>
             {text.subtitle && <p>{text.subtitle}</p>}
             <p>{(text.options && text.options.length) ? 'Here are your options' : 'No options'}</p> 
-            <p>{text.options.length}</p>
+            <button type="button" onClick={onMakeDecision} disabled={!text.options.length}>What should I do?</button>
             <button type="button" onClick={onRemoveAll}>Remove all</button>
-            {
-                numbers.map((number) => {
-                    return <p key={number}>Number: {number}</p>
-                })
-            }
             <ol>
                 {
                     text.options.map((option) => {

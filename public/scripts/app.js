@@ -25,7 +25,11 @@ var onRemoveAll = function onRemoveAll() {
     renderApp();
 };
 
-var numbers = [55, 101, 1000];
+var onMakeDecision = function onMakeDecision() {
+    var randomNumber = Math.floor(Math.random() * text.options.length);
+    var selectedOption = text.options[randomNumber];
+    alert(selectedOption);
+};
 
 var renderApp = function renderApp() {
     var template = React.createElement(
@@ -47,23 +51,15 @@ var renderApp = function renderApp() {
             text.options && text.options.length ? 'Here are your options' : 'No options'
         ),
         React.createElement(
-            'p',
-            null,
-            text.options.length
+            'button',
+            { type: 'button', onClick: onMakeDecision, disabled: !text.options.length },
+            'What should I do?'
         ),
         React.createElement(
             'button',
             { type: 'button', onClick: onRemoveAll },
             'Remove all'
         ),
-        numbers.map(function (number) {
-            return React.createElement(
-                'p',
-                { key: number },
-                'Number: ',
-                number
-            );
-        }),
         React.createElement(
             'ol',
             null,
